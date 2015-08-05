@@ -1,0 +1,30 @@
+SAC2C TEST INFRASTRUCTURE
+
+This is the testing infrastructure for the sac2c compiler. It is comprised of the following files and folders:
+
+- .dbconfig => The file containing important information for access to the mySQL database
+- .config => The file containing important information required for the test infrastructure to run
+- CPU_monitor.sh => This script runs in the background when sac.sh is called. It uses mpstat to collect CPU usage data and writes to the file CPU.log
+- run_CPU.sh = This script is an infinite loop of mpstat 1 1 that is used by CPU_monitor.sh
+- wemo_monitor.sh => This script runs in the background when sac.sh is called. It collects data from the Wemo on instantaneous power consumption and writes to the file energy.log
+- WemoControl => This folder contains the wemo_insight.py script that is used by wemo_monitor.sh
+- failsafe.py => This script is called when the machine that it is on reboots. This happens because the Wemos have a tendency to randomly turn off. It's behavior can be found in its file header.
+- mcontrol.py => Used by measure_sac.py in performing benchmark testing
+- measure_sac.py => The script executed when sac.sh is called. This file is the heart of the benchmark test infrastructure
+- mdb.py => Used by measure_sac.py and mcontrol.py to access the MySQL database where tasks are chosen and results are recorded
+- stop.py => Used by sac.sh when sac.sh is told to stop. It essentially performs the same task as failsafe.py, and ensures that no test data is lost
+- sac-run.sh => Contains the command for executing the compiled file (modified when the benchmark is changed) -- NOTE: measure_sac.py's references should be changed accordingly
+- sac-compile.sh => Contains the command for compiling a benchmark with a given configuration (modified when the benchmark is changed) -- NOTE: measure_sac.py's references should be changed accordingly
+- sac => Contains the benchmarks that will be tested
+ sac.sh => The script used to start and stop measurements
+
+INITIAL SETUP :
+
+1. Download and install SaC in the home directory
+2. Place the IP address of the Wemo attached to the machine in a file named myWemo.txt in the home directory
+3. Place the energy directory in any directory on the machine
+   // Contact us for sample .dbconfig and .config files
+4. Update the .config file with the information requested
+5. Update the .dbconfig file with the login and password of your MySQL server
+6. // Contact us to learn how your database should be set up
+7. Use ./sac.sh start [Series Name] to begin measurements for a given series
