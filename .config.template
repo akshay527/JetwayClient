@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# The test infrastructure configuration file
+
+export HOME="/home/user/" # Path to home directory
+export WORK="/home/user/energy" # Path to energy directory
+export SQLHOST="sql.database.com" # MySQL server hostname
+export DBNAME="measurement" # Database name
